@@ -1,3 +1,4 @@
+//pokemons creation
 let pokemonList = [
     {name: 'Bulbasaur',
      type:["grass","poison"],
@@ -57,3 +58,15 @@ let pokemonList = [
      type:['grass','poison'],
      height: 5}
 ];
+// iterating throughout pokemnonList Array and showing them in the browser 
+for (let i = 0; i < pokemonList.length; i++) {
+    if(pokemonList[i].height >= 6){
+    
+        document.write('<p>' + pokemonList[i].name + " " + "(" + "height: " + pokemonList[i].height + "), " + "- Wow That's big!");
+    }
+    else{
+        document.write('<p>' + pokemonList[i].name + " " + "(" + "height: " + pokemonList[i].height + "), " );
+    }
+    
+}
+

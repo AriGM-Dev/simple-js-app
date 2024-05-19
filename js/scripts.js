@@ -62,14 +62,40 @@ let pokemonRepository = (function (){
     ];
     function add(pokemon){
         //Bonus Task
-        if(typeof(pokemon)==="object"){
-            let allProperties = Object.keys(pokemon)
-            if(typeof(allProperties[0])==='string'&&typeof(allProperties[1])==='array'&&typeof(allProperties[2])==='number'){
-                pokemonList.push(pokemon);
-            }
+        //if(typeof(pokemon)==="object"){
+          //  let allProperties = Object.keys(pokemon)
+            //if(typeof(allProperties[0])==='string'&&typeof(allProperties[1])==='array'&&typeof(allProperties[2])==='number'){
+              //  pokemonList.push(pokemon);
+            //}
             
+        //}
+        // Answer
+        if(typeof(pokemon)==='object' && 'name' in pokemon && 'height' in pokemon && 'types' in pokemon){
+            pokemonList.push(pokemon);
+        }
+        else{
+            document.write('pokemon is not correct');
         }
         
+    }
+
+    function showDetails(pokemon){
+        console.log(pokemon);
+    }
+
+    function includingToButton(button, pokemon){
+        button.addEventListener('click',showDetails(pokemon));
+    }
+
+    function addListItem(pokemon) {
+        let toBeShown = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        button.classList.add('pokemon-button');
+        listItem.appendChild(button);
+        toBeShown.appendChild(listItem);
+        includingToButton(button,pokemon);
     }
     function getAll(){
         return pokemonList;
@@ -80,13 +106,15 @@ let pokemonRepository = (function (){
         return pokemon;
     }
     return {
-        add: add, getAll
+        add: add, 
+        getAll:getAll,
+        addListItem:addListItem
     };
 })();
 
-pokemonRepository.getAll().forEach(item => console.log(item));
 
-//Bonus Task
+pokemonRepository.getAll().forEach(item =>pokemonRepository.addListItem(item));
+
 
 
 // iterating throughout pokemnonList Array and showing them in the browser 

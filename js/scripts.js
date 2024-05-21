@@ -79,12 +79,13 @@ let pokemonRepository = (function (){
         
     }
 
-    function showDetails(pokemon){
-        console.log(pokemon);
+    function showDetails(event) {
+        let target = event.target;
+        console.log(target);
     }
 
-    function includingToButton(button, pokemon){
-        button.addEventListener('click',showDetails(pokemon));
+    function includingToButton(button){
+        button.addEventListener('click',showDetails);
     }
 
     function addListItem(pokemon) {
@@ -95,7 +96,7 @@ let pokemonRepository = (function (){
         button.classList.add('pokemon-button');
         listItem.appendChild(button);
         toBeShown.appendChild(listItem);
-        includingToButton(button,pokemon);
+        includingToButton(button);
     }
     function getAll(){
         return pokemonList;

@@ -27,6 +27,9 @@ h1{
         color: black;
         border: 2px solid #4caf50;
 }
+li{
+    list-style: none;
+}
 .pokemon-button:hover{
     border: 2px blue solid ;
 }

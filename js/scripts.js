@@ -60,6 +60,18 @@ let pokemonRepository = (function (){
          type:['grass','poison'],
          height: 5}
     ];
+
+    function verifyingPokemon(pokemon)
+    {
+        if(typeof(pokemon)==='object' && 'name' in pokemon && 'height' in pokemon && 'types' in pokemon){
+            pokemonList.push(pokemon);
+            return true;
+        }
+        else{
+            document.write('pokemon is not correct');
+            return false;
+        }
+    }
     function add(pokemon){
         //Bonus Task
         //if(typeof(pokemon)==="object"){
@@ -70,22 +82,19 @@ let pokemonRepository = (function (){
             
         //}
         // Answer
-        if(typeof(pokemon)==='object' && 'name' in pokemon && 'height' in pokemon && 'types' in pokemon){
+        if(verifyingPokemon(pokemon)=== true){
             pokemonList.push(pokemon);
-        }
-        else{
-            document.write('pokemon is not correct');
-        }
-        
+        }  
     }
 
-    function showDetails(event) {
-        let target = event.target;
-        console.log(target);
+    function showDetails(pokemon) {
+        console.log(pokemon);
     }
 
-    function includingToButton(button){
-        button.addEventListener('click',showDetails);
+    function includingToButton(button, pokemon){
+        button.addEventListener('click',function(){
+            showDetails(pokemon);
+        });
     }
 
     function addListItem(pokemon) {
@@ -96,7 +105,7 @@ let pokemonRepository = (function (){
         button.classList.add('pokemon-button');
         listItem.appendChild(button);
         toBeShown.appendChild(listItem);
-        includingToButton(button);
+        includingToButton(button,pokemon);
     }
     function getAll(){
         return pokemonList;

@@ -25,6 +25,7 @@ let pokemonRepository = (function (){
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(() =>{
+            hideLoadingMessage();
             console.log(pokemon);
         })
         
@@ -91,8 +92,9 @@ let pokemonRepository = (function (){
         }).then(details => {
             item.height = details.height;
             item.types = details.types;
-            //showLoadingMessage();
+            hideLoadingMessage();
         }).catch(err => {
+            hideLoadingMessage();
             console.log(err);
         });
     }

@@ -26,39 +26,73 @@ let pokemonRepository = (function (){
 
     // Function in charge of creating the modal
 
-    function showModal(pokemonName, pokemonHeight, img) {
-        // Clear all existing modal content
-        modalContainer.innerHTML = '';
+    // function showModal(pokemonName, pokemonHeight, img) {
+    //     // Clear all existing modal content
+    //     modalContainer.innerHTML = '';
     
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
+    //     let modal = document.createElement('div');
+    //     modal.classList.add('modal');
     
-        // Adding the new modal content
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'X';
-        closeButtonElement.addEventListener('click', hideModal);
+    //     // Adding the new modal content
+    //     let closeButtonElement = document.createElement('button');
+    //     closeButtonElement.classList.add('modal-close');
+    //     closeButtonElement.innerText = 'X';
+    //     closeButtonElement.addEventListener('click', hideModal);
     
-        let titleElement = document.createElement('h1');
-        titleElement.innerText = pokemonName;
+    //     let titleElement = document.createElement('h1');
+    //     titleElement.innerText = pokemonName;
     
-        let contentElement = document.createElement('p');
-        contentElement.innerText = pokemonHeight;
+    //     let contentElement = document.createElement('p');
+    //     contentElement.innerText = pokemonHeight;
     
-        let imageElement = document.createElement("img");
-        imageElement.setAttribute("src", img);
-        imageElement.setAttribute("width", "304");
-        imageElement.setAttribute("height", "228");
-        imageElement.setAttribute("alt", "The pokemon image");
+    //     let imageElement = document.createElement("img");
+    //     imageElement.setAttribute("src", img);
+    //     imageElement.setAttribute("width", "304");
+    //     imageElement.setAttribute("height", "228");
+    //     imageElement.setAttribute("alt", "The pokemon image");
     
-        modal.appendChild(closeButtonElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(contentElement);
-        modal.appendChild(imageElement);
-        modalContainer.appendChild(modal);
+    //     modal.appendChild(closeButtonElement);
+    //     modal.appendChild(titleElement);
+    //     modal.appendChild(contentElement);
+    //     modal.appendChild(imageElement);
+    //     modalContainer.appendChild(modal);
     
-        modalContainer.classList.add('is-visible');
-      }
+    //     modalContainer.classList.add('is-visible');
+    //   }
+
+    //Function in charge of the Bootstrap Modal
+
+    function showBootstrapModal(item) {
+        let modalBody = $('.modal-body');
+        let modalTitle = $('.modal-title');
+        let modalHeader = $('.modal-header');
+        modalTitle.empty();
+        modalBody.empty();
+        
+        //creating element for name in modal content
+        let nameElement = $('<h1>' + item.name + '</h1>'); 
+        //creating img in modal content
+        let imageElementFront = $('<img class ="modal-img">');
+        imageElementFront.attr("src", item.imageUrlFront);
+        let imageElementBack = $('<img class="modal-img" style="width:50%">');
+        imageElementBack.attr("src", item.imageUrlBack);
+        //creating element for height in modal content
+        let heightElement = $('<p>' + 'height : ' + item.height + '</p>');
+        //creating element for weight in modal content
+        let weightElement = $('<p>' + 'weight : ' + item.weight + '</p>');
+        //creating element for type in modal content
+        let typesElement = $('<p>' + 'types : ' + item.types + '</p>');
+        //creating element for abilities in modal content
+        let abilitiesElement = $('<p>' + 'abilities: ' + item.abilities + '</p>' );
+
+        modalTitle.append(nameElement);
+        modalBody.append(imageElementFront);
+        modalBody.append(imageElementBack);
+        modalBody.append(heightElement);
+        modalBody.append(weightElement);
+        modalBody.append(typesElement);
+        modalBody.append(abilitiesElement);
+    }
 
       // Hiding the modal
       function hideModal() {
@@ -85,7 +119,8 @@ let pokemonRepository = (function (){
         loadDetails(pokemon).then(() =>{
             hideLoadingMessage();
             //console.log(pokemon);
-            showModal(pokemon.name, pokemon.height, pokemon.imageUrl);
+            // showModal(pokemon.name, pokemon.height, pokemon.imageUrlFront);
+            showBootstrapModal(pokemon);
         })
         
     }
@@ -99,9 +134,13 @@ let pokemonRepository = (function (){
     function addListItem(pokemon) {
         let toBeShown = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
         let button = document.createElement('button');
         button.innerText = pokemon.name;
+        button.classList.add('btn-primary');
         button.classList.add('pokemon-button');
+        button.setAttribute('data-toggle','modal');
+        button.setAttribute('data-target','#exampleModal');
         listItem.appendChild(button);
         toBeShown.appendChild(listItem);
         includingToButton(button,pokemon);
@@ -150,9 +189,12 @@ let pokemonRepository = (function (){
         return fetch(url).then(response => {
             return response.json();
         }).then(details => {
-            item.imageUrl = details.sprites.front_default;
+            item.imageUrlFront = details.sprites.front_default;
+            item.imageUrlBack = details.sprites.back_default;
             item.height = details.height;
+            item.weight = details.weight;
             item.types = details.types;
+            item.abilities = details.abilities;
             hideLoadingMessage();
         }).catch(err => {
             hideLoadingMessage();

@@ -2,7 +2,7 @@
 // Wrapping pokemons in an IIFE
 let pokemonRepository = (function (){
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon?limit=950';
     let message = document.querySelector('h2');
     let modalContainer = document.querySelector('#modal-container');
 
@@ -143,58 +143,58 @@ let pokemonRepository = (function (){
 
     // With Async and await and creating a new object
 
-    async function loadDetails(item){
+    // async function loadDetails(item){
+    //     let url = item.detailsUrl;
+    //     showLoadingMessage();
+    //     try {
+    //         const response= await fetch(url);
+    //         const resJson = await response.json();
+    //         return {
+    //             name: resJson.name,
+    //             imageUrlFront:resJson.sprites.front_default,
+    //             imageUrlFront : resJson.sprites.front_default,
+    //             imageUrlBack : resJson.sprites.back_default,
+    //             height : resJson.height,
+    //             weight : resJson.weight,
+    //             types : parseTypes(resJson.types),
+    //             abilities : parseAbilities(resJson.abilities)
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     finally{
+    //         hideLoadingMessage();
+    //     }
+    // }
+
+    // Following Career Foundry's Method
+    function loadDetails(item){
         let url = item.detailsUrl;
-        showLoadingMessage();
-        try {
-            const response= await fetch(url);
-            const resJson = await response.json();
-            return {
-                name: resJson.name,
-                imageUrlFront:resJson.sprites.front_default,
-                imageUrlFront : resJson.sprites.front_default,
-                imageUrlBack : resJson.sprites.back_default,
-                height : resJson.height,
-                weight : resJson.weight,
-                types : parseTypes(resJson.types),
-                abilities : parseAbilities(resJson.abilities)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        finally{
+        return fetch(url).then(response => {
+            return response.json();
+        }).then(details => {
+            item.imageUrlFront = details.sprites.front_default;
+            item.imageUrlBack = details.sprites.back_default;
+            item.height = details.height;
+            item.weight = details.weight;
+            item.types = parseTypes(details.types);
+            item.abilities = parseAbilities(details.abilities);
             hideLoadingMessage();
-        }
+        }).catch(err => {
+            
+            console.log(err);
+        });
     }
 
-    //Following Career Foundry's Method
-    // function loadDetails(item){
-    //     let url = item.detailsUrl;
-    //     return fetch(url).then(response => {
-    //         return response.json();
-    //     }).then(details => {
-    //         item.imageUrlFront = details.sprites.front_default;
-    //         item.imageUrlBack = details.sprites.back_default;
-    //         item.height = details.height;
-    //         item.weight = details.weight;
-    //         item.types = parseTypes(details.types);
-    //         item.abilities = parseAbilities(details.abilities);
-    //         hideLoadingMessage();
-    //     }).catch(err => {
-            
-    //         console.log(err);
-    //     });
-    // }
+    function parseAbilities(abilities) {
+        return abilities.map(({ability}) => ability.name)
+                        .join(",");
+    }
 
-    // function parseAbilities(abilities) {
-    //     return abilities.map(({ability}) => ability.name)
-    //                     .join(",");
-    // }
-
-    // function parseTypes(types) {
-    //     return types.map(({type}) => type.name)
-    //                 .join(",");
-    // }
+    function parseTypes(types) {
+        return types.map(({type}) => type.name)
+                    .join(",");
+    }
     
 
     return {

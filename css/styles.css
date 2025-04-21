@@ -105,3 +105,16 @@ es usando scale y transform como en web dev simplified */
 .modal p {
   margin-bottom: 0;
 }
+
+
+.pokemon-list{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media all and (max-width: 625px){
+  .pokemon-list{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

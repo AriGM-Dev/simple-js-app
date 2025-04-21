@@ -89,6 +89,8 @@ let pokemonRepository = (function (){
     }
 
     function addListItem(pokemon) {
+        // let pokemonDiv = document.createElement('div');
+        // pokemon.classList.add('row');
         let toBeShown = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
         listItem.classList.add('list-group-item');
@@ -101,6 +103,7 @@ let pokemonRepository = (function (){
         listItem.appendChild(button);
         toBeShown.appendChild(listItem);
         includingToButton(button,pokemon);
+        // pokemonDiv.appendChild(listItem);
     }
     function getAll(){
         return pokemonList;

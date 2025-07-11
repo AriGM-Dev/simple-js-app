@@ -118,3 +118,25 @@ es usando scale y transform como en web dev simplified */
     grid-template-columns: 1fr;
   }
 }
+
+/* @media all and (max-width: 576px){
+  .form-inline{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+} */
+
+.hide {
+    display: none;
+}
+
+.modal-body p {
+  display:inline;
+
+}
+#label-title{
+  font-size: 30px;
+  font-weight: 700;
+  color: #007bff;
+}

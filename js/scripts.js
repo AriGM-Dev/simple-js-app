@@ -99,7 +99,7 @@ window.onload = async function () {
 //     let apiUrl = 'https://pokeapi.co/api/v2/pokemon?limit=950';
 //     let message = document.querySelector('h2');
 //     let modalContainer = document.querySelector('#modal-container');
-//     const searchInput = document.querySelector('#search');
+//     const searchInput = document.querySelector('#search').value.trim();
 //     const resultsList = document.querySelector('#results');
 //     let searchButton = document.querySelector('btn btn-outline-primary');
 
@@ -125,6 +125,32 @@ window.onload = async function () {
 //     function findPokemon(name){
 //         let pokemon = pokemonList.filter(n=>n.name===name);
 //         return pokemon;
+//     }
+
+//     function filterPokemonByName() {
+//         let pokemons =[];
+//         if (searchInput.length===0) {
+//             pokemons = pokemonList;
+//         }
+//         else{
+//             pokemons = pokemonList.filter(pokemon => pokemon.name.includes(searchInput))
+//         }
+//         resultsList.textContent = ' ';
+//         pokemons.forEach(pokemon => {
+//             let toBeShown = document.querySelector('.pokemon-list');
+//             let listItem = document.createElement('li');
+//             listItem.classList.add('list-group-item');
+//             let button = document.createElement('button');
+//             button.innerText = pokemon.name;
+//             button.classList.add('btn-primary');
+//             button.classList.add('pokemon-button');
+//             button.setAttribute('data-toggle', 'modal');
+//             button.setAttribute('data-target', '#exampleModal');
+//             listItem.appendChild(button);
+//             toBeShown.appendChild(listItem);
+//             includingToButton(button, pokemon);
+//        });
+
 //     }
     
 //     //Function in charge of the Bootstrap Modal
